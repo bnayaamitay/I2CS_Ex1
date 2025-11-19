@@ -174,13 +174,17 @@ public class Ex1 {
 	 * @param p2
 	 * @return
 	 */
-	public static double[] add(double[] p1, double[] p2) {
-		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
-		return ans;
-	}
+    public static double[] add(double[] p1, double[] p2) {
+        int maxLength = Math.max(p1.length,p2.length);
+        double[] result = new double[maxLength];
+        for(int i=0;i < maxLength;i++) {
+            double a = 0, b = 0;
+            if(i< p1.length) a=p1[i];
+            if(i< p2.length) b=p2[i];
+            result[i] = a + b;
+        }
+        return result;
+    }
 	/**
 	 * This function computes the polynomial function which is the multiplication of two polynoms (p1,p2)
 	 * @param p1
