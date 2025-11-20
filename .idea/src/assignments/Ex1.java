@@ -204,10 +204,13 @@ public class Ex1 {
 	 * @return
 	 */
 	public static double[] derivative (double[] po) {
-		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
-		return ans;
+        double [] ans = ZERO;//
+        int length = po.length;
+        if (length == 0) {ans = ZERO;}
+        else ans = new double[length -1];
+        for(int i = 0; i < length -1; i++) {
+            ans[i]=po[i + 1] * (i + 1);
+        }
+        return ans;
 	}
 }

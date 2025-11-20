@@ -1,6 +1,8 @@
 package assignments;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -119,7 +121,8 @@ class Ex1Test {
 		assertTrue(Ex1.equals(Ex1.ZERO, dp3));
 		assertTrue(Ex1.equals(dp4, dp3));
 	}
-	@Test
+
+    @Test
 	/** 
 	 * Tests the parsing of a polynom in a String like form.
 	 */
