@@ -24,11 +24,13 @@ public class Ex1 {
 	 * @return f(x) - the polynomial function value at x.
 	 */
 	public static double f(double[] poly, double x) {
-		double ans = 0;
-		for(int i=0;i<poly.length;i++) {
-			double c = Math.pow(x, i);
-			ans += c*poly[i];
-		}
+        double ans = 0;
+		if (poly == null || poly.length == 0) {return ans;}
+        double exponent = 1;
+        for(int i = 0; i < poly.length; i++) {
+            ans += poly[i] * exponent;
+            exponent *= x;
+        }
 		return ans;
 	}
 	/** Given a polynomial function (p), a range [x1,x2] and an epsilon eps.
@@ -191,13 +193,16 @@ public class Ex1 {
 	 * @param p2
 	 * @return
 	 */
-	public static double[] mul(double[] p1, double[] p2) {
-		double [] ans = ZERO;//
-        /** add you code below
+    public static double[] mul(double[] p1, double[] p2) {
+        double[] result = new double[p1.length + p2.length -1];
+        for (int i = 0; i < p1.length; i++) {
+            for (int j = 0; j < p2.length; j++) {
+                result[i + j] += p1[i] * p2[j];
+            }
+        }
+        return result;
+    }
 
-         /////////////////// */
-		return ans;
-	}
 	/**
 	 * This function computes the derivative of the p0 polynomial function.
 	 * @param po
@@ -206,7 +211,7 @@ public class Ex1 {
 	public static double[] derivative (double[] po) {
         double [] ans = ZERO;//
         int length = po.length;
-        if (length == 0) {ans = ZERO;}
+        if (length <= 1) return ZERO;
         else ans = new double[length -1];
         for(int i = 0; i < length -1; i++) {
             ans[i]=po[i + 1] * (i + 1);
