@@ -90,16 +90,29 @@ public class Ex1 {
 	 * @param poly the polynomial function represented as an array of doubles
 	 * @return String representing the polynomial function:
 	 */
-	public static String poly(double[] poly) {
-		String ans = "";
-		if(poly.length==0) {ans="0";}
-		else {
-            /** add you code below
-
-             /////////////////// */
-		}
-		return ans;
-	}
+    public static String poly(double[] poly) {
+        String ans = "";
+        if (poly.length == 0) return "0";
+        for (int i = 0; i < poly.length; i++) {
+            if (poly[i] == 0) continue;
+            if (i == 0) ans += poly[i];
+            else if (i == 1) ans += poly[i] + "x";
+            else ans += poly[i] + "x^" + i;
+            int nextIndex = -1;
+            for (int j = i + 1; j < poly.length; j++) {
+                if (poly[j] != 0) {
+                    nextIndex = j;
+                    break;
+                }
+            }
+            if (nextIndex != -1) {
+                if (poly[nextIndex] > 0) ans += " + ";
+                else ans += " - ";
+                poly[nextIndex] = Math.abs(poly[nextIndex]);
+            }
+        }
+        return ans;
+    }
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)
 	 * for which |p1(x) -p2(x)| < eps, assuming (p1(x1)-p2(x1)) * (p1(x2)-p2(x2)) <= 0.
