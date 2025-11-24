@@ -1,5 +1,7 @@
 package assignments;
 
+import java.util.Arrays;
+
 /**
  * Introduction to Computer Science 2026, Ariel University,
  * Ex1: arrays, static functions and JUnit
@@ -78,9 +80,12 @@ public class Ex1 {
 	 */
 	public static boolean equals(double[] p1, double[] p2) {
 		boolean ans = true;
-        /** add you code below
-
-         /////////////////// */
+        int maxLength = Math.max(p1.length,p2.length);
+        for (int i = 0; i < maxLength; i++) {
+        if (Math.abs(f(p1, i) - f(p2, i)) >= EPS) {
+            return false;
+        }
+        }
 		return ans;
 	}
 
@@ -93,13 +98,13 @@ public class Ex1 {
     public static String poly(double[] poly) {
         String ans = "";
         if (poly.length == 0) return "0";
-        for (int i = 0; i < poly.length; i++) {
+        for (int i = poly.length -1; i >= 0; i--) {
             if (poly[i] == 0) continue;
             if (i == 0) ans += poly[i];
             else if (i == 1) ans += poly[i] + "x";
             else ans += poly[i] + "x^" + i;
             int nextIndex = -1;
-            for (int j = i + 1; j < poly.length; j++) {
+            for (int j = i -1; j >= 0; j--) {
                 if (poly[j] != 0) {
                     nextIndex = j;
                     break;
@@ -112,7 +117,6 @@ public class Ex1 {
             }
         }
         return ans;
-
     }
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)
@@ -126,9 +130,24 @@ public class Ex1 {
 	 */
 	public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
 		double ans = x1;
-        /** add you code below
-
-         /////////////////// */
+        double[] negative;
+        double[] positive;
+        if (p1.length >= p2.length) {
+            negative = Arrays.copyOf(p2, p2.length);
+            positive = Arrays.copyOf(p1, p1.length);
+        }
+        else {
+            negative = Arrays.copyOf(p1, p1.length);
+            positive = Arrays.copyOf(p2, p2.length);
+        }
+        for (int i = 0; i < negative.length; i++) {
+            negative[i] *= (-1);
+        }
+        double[] result = add(positive, negative);
+        if (Math.abs(x2 - x1) < eps) {
+            return (x1 + x2) / 2;
+        }
+        ans = root_rec(result,x1,x2,eps);
 		return ans;
 	}
 	/**
@@ -179,9 +198,7 @@ public class Ex1 {
 	 */
 	public static double[] getPolynomFromString(String p) {
 		double [] ans = ZERO;//  -1.0x^2 +3.0x +2.0
-        /** add you code below
 
-         /////////////////// */
 		return ans;
 	}
 	/**
