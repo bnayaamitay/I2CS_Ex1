@@ -81,7 +81,7 @@ public class Ex1 {
             double a = (xx[2] * (yy[1] - yy[0]) + xx[1] * (yy[0] - yy[2]) + xx[0] * (yy[2] - yy[1])) / denom;
             double b = (xx[2]*xx[2] * (yy[0] - yy[1]) + xx[1]*xx[1] * (yy[2] - yy[0]) + xx[0]*xx[0] * (yy[1] - yy[2])) / denom;
             double c = (xx[1] * xx[2] * (xx[1] - xx[2]) * yy[0] + xx[2] * xx[0] * (xx[2] - xx[0]) * yy[1] + xx[0] * xx[1] * (xx[0] - xx[1]) * yy[2]) / denom;
-            if (a == 0.0) {
+            if (a == 0) {
                 ans = new double[] {c, b};
             }
             else {
@@ -209,12 +209,27 @@ public class Ex1 {
 	 */
 	public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
 		double ans = 0;
-        /** add you code below
+        double h = (x2 - x1) / numberOfTrapezoid;
+            for (int i = 0; i < numberOfTrapezoid; i++) {
+                double xi = x1 + i * h;
+                double xiNext = xi + h;
+                double d1 = f(p1, xi) - f(p2, xi);
+                double d2 = f(p1, xiNext) - f(p2, xiNext);
+                if (d1 * d2 < 0) {
+                    double ratio = Math.abs(d1) / (Math.abs(d1) + Math.abs(d2));
+                    double xIntersect = xi + ratio * h;
+                    double baseLeft = xIntersect - xi;
+                    ans += Math.abs(d1) * baseLeft / 2.0;
+                    double baseRight = xiNext - xIntersect;
+                    ans += Math.abs(d2) * baseRight / 2.0;
+                } else {
+                    ans += (Math.abs(d1) + Math.abs(d2)) * h / 2.0;
+                }
+            }
+        return ans;
+    }
 
-         /////////////////// */
-		return ans;
-	}
-	/**
+    /**
 	 * This function computes the array representation of a polynomial function from a String
 	 * representation. Note:given a polynomial function represented as a double array,
 	 * getPolynomFromString(poly(p)) should return an array equals to p.
