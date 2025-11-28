@@ -46,14 +46,21 @@ public class Ex1 {
 	 * @param eps - epsilon (positive small value (often 10^-3, or 10^-6).
 	 * @return an x value (x1<=x<=x2) for which |p(x)| < eps.
 	 */
-	public static double root_rec(double[] p, double x1, double x2, double eps) {
-		double f1 = f(p,x1);
-		double x12 = (x1+x2)/2;
-		double f12 = f(p,x12);
-		if (Math.abs(f12)<eps) {return x12;}
-		if(f12*f1<=0) {return root_rec(p, x1, x12, eps);}
-		else {return root_rec(p, x12, x2, eps);}
-	}
+    public static double root_rec(double[] p, double x1, double x2, double eps) {
+        double f1 = f(p, x1);
+        double f2 = f(p, x2);
+        double x12 = (x1 + x2) / 2.0;
+        double f12 = f(p, x12);
+        if (Math.abs(f12) < eps) {return x12;}
+        if (Math.abs(f1) < eps) {return x1;}
+        if (Math.abs(f2) < eps) {return x2;}
+        if (f12 * f1 <= 0) {
+            return root_rec(p, x1, x12, eps);
+        }
+        else {
+            return root_rec(p, x12, x2, eps);
+        }
+    }
 	/**
 	 * This function computes a polynomial representation from a set of 2D points on the polynom.
 	 * The solution is based on: //	http://stackoverflow.com/questions/717762/how-to-calculate-the-vertex-of-a-parabola-given-three-points
@@ -207,26 +214,39 @@ public class Ex1 {
 	 * @param numberOfTrapezoid - a natural number representing the number of Trapezoids between x1 and x2.
 	 * @return the approximated area between the two polynomial functions within the [x1,x2] range.
 	 */
-	public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
-		double ans = 0;
+    public static double area(double[] p1, double[] p2, double x1, double x2, int numberOfTrapezoid) {
+        double ans = 0;
         double h = (x2 - x1) / numberOfTrapezoid;
-            for (int i = 0; i < numberOfTrapezoid; i++) {
-                double xi = x1 + i * h;
-                double xiNext = xi + h;
-                double d1 = f(p1, xi) - f(p2, xi);
-                double d2 = f(p1, xiNext) - f(p2, xiNext);
-                if (d1 * d2 < 0) {
-                    double ratio = Math.abs(d1) / (Math.abs(d1) + Math.abs(d2));
-                    double xIntersect = xi + ratio * h;
-                    double baseLeft = xIntersect - xi;
-                    ans += Math.abs(d1) * baseLeft / 2.0;
-                    double baseRight = xiNext - xIntersect;
-                    ans += Math.abs(d2) * baseRight / 2.0;
-                } else {
-                    ans += (Math.abs(d1) + Math.abs(d2)) * h / 2.0;
+        for (int i = 0; i < numberOfTrapezoid; i++) {
+            double xi = x1 + i * h;
+            double xiNext = xi + h;
+            double d1 = f(p1, xi) - f(p2, xi);
+            double d2 = f(p1, xiNext) - f(p2, xiNext);
+            if (d1 * d2 < 0) {
+                int maxLength = Math.max(p1.length, p2.length);
+                double[] negative = new double[maxLength];
+                for (int j = 0; j < p2.length; j++) {
+                    negative[j] = -p2[j];
                 }
+                double[] diff = add(p1, negative);
+                double root = root_rec(diff, xi, xiNext, EPS);
+                double dRoot = f(p1, root) - f(p2, root);
+                ans += (Math.abs(d1) + Math.abs(dRoot)) * (root - xi) / 2.0;
+                ans += (Math.abs(dRoot) + Math.abs(d2)) * (xiNext - root) / 2.0;
+            } else {
+                ans += (Math.abs(d1) + Math.abs(d2)) * h / 2.0;
             }
-        return ans;
+        }
+        return roundTo4Decimal(ans);
+    }
+
+    public static double roundTo4Decimal(double num) {
+        double round = ((int)(num * 10000)) / 10000.0;
+        int decimal3 = (int)(round * 1000) % 10;
+        if (decimal3 <= 2) {
+            round = ((int)(round * 100)) / 100.0;
+        }
+        return round;
     }
 
     /**
@@ -325,18 +345,22 @@ public class Ex1 {
     }
 
 	/**
-	 * This function computes the derivative of the p0 polynomial function.
-	 * @param po
-	 * @return
+     * This function calculates the derivative of a polynomial.
+     * The polynomial is stored in an array where po[i] is the
+     * coefficient of x^i.
+     * @param po the array of polynomial coefficients.
+	 * @return ans, a new array with the coefficients of the derivative.
 	 */
 	public static double[] derivative (double[] po) {
-        double [] ans = ZERO;//
-        int length = po.length;
+        double [] ans = ZERO; // Start with a default result.
+        int length = po.length; // Get the number of coefficients in the polynomial.
+        // Checks if the exponent's coefficient is one or less and then returns the default value.
         if (length <= 1) return ans;
+        // Otherwise the answer will be equal along the array of coefficients of the power minus one.
         else ans = new double[length -1];
-        for(int i = 0; i < length -1; i++) {
-            ans[i]=po[i + 1] * (i + 1);
+        for(int i = 0; i < length -1; i++) { // A loop that runs over the size of the new array.
+            ans[i]=po[i + 1] * (i + 1); // Calculating the array coefficients.
         }
-        return ans;
+        return ans; // Returning the derivative of a polynomial.
 	}
 }
