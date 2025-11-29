@@ -36,6 +36,7 @@ public class Ex1 {
         }
 		return ans; // Return final value.
 	}
+
 	/** Given a polynomial function (p), a range [x1,x2] and an epsilon eps.
 	 * This function computes an x value (x1<=x<=x2) for which |p(x)| < eps, 
 	 * assuming p(x1)*p(x2) <= 0.
@@ -59,6 +60,7 @@ public class Ex1 {
         // Otherwise search right side.
         else {return root_rec(p, x12, x2, eps);}
     }
+
 	/**
      * Computes a polynomial from up to 3 given points.
      * The solution is based on: //	http://stackoverflow.com/questions/717762/how-to-calculate-the-vertex-of-a-parabola-given-three-points
@@ -100,6 +102,7 @@ public class Ex1 {
 		}
 		return ans; // Return result.
     }
+
     /**
      * Checks if two polynomials are equal.
      * They are equal if f(x) values match for n+1 points,
@@ -149,6 +152,7 @@ public class Ex1 {
         }
         return ans; // Return final polynomial string.
     }
+
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)
 	 * for which |p1(x) -p2(x)| < eps, assuming (p1(x1)-p2(x1)) * (p1(x2)-p2(x2)) <= 0.
@@ -183,6 +187,7 @@ public class Ex1 {
         ans = root_rec(result,x1,x2,eps); // Otherwise, find root of difference polynomial.
 		return ans;
 	}
+
 	/**
 	 * Given a polynomial function (p), a range [x1,x2] and an integer with the number (n) of sample points.
 	 * This function computes an approximation of the length of the function between f(x1) and f(x2) 
@@ -252,6 +257,7 @@ public class Ex1 {
         }
         return roundTo4Decimal(ans); // Round result to 4 decimals.
     }
+
     /**
      * Rounds a number to 4 decimal places.
      * If the 3rd decimal digit is 4 or less, it further rounds to 2 decimal places.
@@ -331,6 +337,7 @@ public class Ex1 {
         }
         return ans; // Return the final array of coefficients.
     }
+
 	/**
      * Adds two polynomials p1 and p2.
      * Each polynomial is stored in an array where p[i] is the coefficient of x^i.
@@ -351,6 +358,7 @@ public class Ex1 {
         }
         return result; // Return the coefficients of the sum polynomial.
     }
+
 	/**
 	 * Multiplies two polynomials (p1 and p2).
      * Each polynomial is stored in an array where p[i] is the coefficient of x^i.
