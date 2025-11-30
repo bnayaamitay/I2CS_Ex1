@@ -39,9 +39,9 @@ The project focuses on building and testing basic functions in Java, using array
   They are considered equal if their values match for `n+1` test points (where `n` is the maximum degree), within a tolerance `EPS`.
 
 - `sameValue(double[] p1, double[] p2, double x1, double x2, double eps)`
+  Finds an `x` value in the range `[x1, x2]` where the two polynomials have approximately the same value.  
+  Returns an `x` such that `|p
 
 ## Image result
 <img width="1002" height="1010" alt="image" src="https://github.com/user-attachments/assets/37b020b4-75d2-4cd3-80ce-4b116a08469e" />
 
-  Finds an `x` value in the range `[x1, x2]` where the two polynomials have approximately the same value.  
-  Returns an `x` such that `|p
