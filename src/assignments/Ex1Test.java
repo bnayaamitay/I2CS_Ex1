@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * This JUnit class represents a JUnit (unit testing) for Ex1-
  * It contains few testing functions for the polynomial functions as define in Ex1.
  * Note: you should add additional JUnit testing functions to this class.
- *
+ *.
  * @author boaz.ben-moshe
  */
 
