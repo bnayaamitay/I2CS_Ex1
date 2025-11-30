@@ -356,7 +356,7 @@ public class Ex1 {
             if(i< p2.length) b=p2[i]; // Take coefficient from p2 if it exists.
             result[i] = a + b; // Add the two coefficients together.
         }
-        return result; // Return the coefficients of the sum polynomial.
+        return cleanFromZeros(result); // Return the coefficients of the sum polynomial.
     }
 
 	/**
@@ -369,13 +369,26 @@ public class Ex1 {
      * @return coefficients of the resulting polynomial after multiplication
 	 */
     public static double[] mul(double[] p1, double[] p2) {
-        double[] result = new double[p1.length + p2.length -1]; // The array size is p1.length + p2.length - 1.
+        double[] result = new double[p1.length + p2.length - 1]; // The array size is p1.length + p2.length - 1.
         for (int i = 0; i < p1.length; i++) { // Loop through all coefficients of the first polynomial.
             for (int j = 0; j < p2.length; j++) { // Loop through all coefficients of the second polynomial.
                 result[i + j] += p1[i] * p2[j]; // Multiply coefficients and add to the correct position (i+j)
             }
         }
-        return result; // Return the coefficients of the product polynomial.
+        return cleanFromZeros(result); // Return the coefficients of the product polynomial.
+    }
+
+    /**
+     * Removes unnecessary zeros from the end of a polynomial array.
+     * Returns the shortened array, or {0} if all elements are zero.
+     */
+    public static double[] cleanFromZeros(double[] p) {
+        int i = p.length - 1;
+        while (i >= 0 && p[i] == 0) { // A loop that runs backwards until a non-zero term is found.
+            i--;
+        }
+        if (i < 0) {return ZERO;} // If all terms are zero
+        return Arrays.copyOf(p, i + 1); // Otherwise, return the array up to the last non-zero element.
     }
 
 	/**

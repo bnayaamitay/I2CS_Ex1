@@ -74,6 +74,18 @@ class Ex1Test {
 		double[] p1 = Ex1.add(po1, Ex1.ZERO);
 		assertTrue(Ex1.equals(p1, po1));
 	}
+    @Test
+    /**
+     * Verifies that adding 0 to p1 does not change its coefficients or length.
+     */
+    void testAdd4() {
+        boolean ans= false;
+        int p1l = po1.length;
+        double[] p2 = {0,0,0,0};
+        double[] pResult = Ex1.add(p2, po1);
+        if(pResult.length==p1l) {ans=true;}
+        assertTrue(ans);
+    }
 	@Test
 	/**
 	 * Tests that p1*0 == 0
